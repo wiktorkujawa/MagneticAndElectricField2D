@@ -63,10 +63,13 @@ LinesVoltages=ComplexF64[]
 ConductorThickness=Float64[]
 NumberOfBundledConductors=Float64[]
 ConductorsSpacing=Float64[]
+LinesPhaseOrder=String[]
+LinesRouteShift=Float64[]
 
 CablesPositions=Array{Float64,1}[]
 CablesCurrents=ComplexF64[]
-
+CablesPhaseOrder=String[]
+CablesRouteShift=Float64[]
 
 const phaseShift=2*pi/3
 # setup Platform/Renderer bindings
@@ -80,9 +83,9 @@ clear_color = Cfloat[0.45, 0.55, 0.60, 1.00]
 
 while !GLFW.WindowShouldClose(window)
     global showMainMenu
-    global LinesPositions,LinesCurrents, LinesVoltages
+    global LinesPositions,LinesCurrents, LinesVoltages, LinesPhaseOrder,LinesRouteShift
     global ConductorThickness, NumberOfBundledConductors, ConductorsSpacing
-    global CablesPositions,CablesCurrents
+    global CablesPositions,CablesCurrents, CablesPhaseOrder, CablesRouteShift
     
 
     global  phaseShift

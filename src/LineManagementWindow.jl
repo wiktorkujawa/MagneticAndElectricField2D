@@ -5,7 +5,7 @@ let
     CImGui.Begin("Line management", p_open, window_flags) || (CImGui.End(); return)
     
 
-    @cstatic center=Cfloat[0.0,0.0] centerLine=Cfloat[0.0,0.0] leftLine=Cfloat[0.0,0.0] rightLine=Cfloat[0.0,0.0] formationType=Cint(1) I=Cfloat(640.0) phaseAngle=Cfloat(0.0) gapThird=Cfloat[0.0,0.0,0.0] phaseOrder=Cint(0) phaseMultiplier=Cint[0,-1,1] gapFormation=Cfloat(4.0) bundleSpacing=Cfloat(4.0) numberOfBundledConductors=Cint(1) conductorThickness=Cfloat(4.0) elementType=Cint(0) voltage=Cfloat(123.0) begin
+    @cstatic center=Cfloat[0.0,0.0] centerLine=Cfloat[0.0,0.0] leftLine=Cfloat[0.0,0.0] rightLine=Cfloat[0.0,0.0] formationType=Cint(1) I=Cfloat(640.0) phaseAngle=Cfloat(0.0) gapThird=Cfloat[0.0,0.0,0.0] phaseOrder=Cint(0) phaseMultiplier=Cint[0,-1,1] gapFormation=Cfloat(4.0) bundleSpacing=Cfloat(4.0) numberOfBundledConductors=Cint(1) conductorThickness=Cfloat(4.0) elementType=Cint(0) voltage=Cfloat(123.0)  begin
     @c CImGui.RadioButton("Power lines", &elementType, 0); CImGui.SameLine()
     @c CImGui.RadioButton("Undeground Cables", &elementType, 1);
               CImGui.Separator()
@@ -35,16 +35,22 @@ let
 
               if phaseOrder==0
                 phaseMultiplier=0,-1,1
+                phaseName=["A","B","C"]
               elseif phaseOrder==1
                 phaseMultiplier=0,1,-1
+                phaseName=["A","C","B"]
               elseif phaseOrder==2
                 phaseMultiplier=-1,0,1
+                phaseName=["B","A","C"]
               elseif phaseOrder==3
                 phaseMultiplier=-1,1,0
+                phaseName=["B","C","A"]
               elseif phaseOrder==4
                 phaseMultiplier=1,0,-1
+                phaseName=["C","A","B"]
               else
                 phaseMultiplier=1,-1,0
+                phaseName=["C","B","A"]
               end
 
 
@@ -81,10 +87,14 @@ let
                 if elementType==1
                   push!(CablesPositions,leftLine,centerLine,rightLine)
                   push!(CablesCurrents,I*exp(im*(phaseMultiplier[1]*phaseShift+phaseAngle)),I*exp(im*(phaseMultiplier[2]*phaseShift+phaseAngle)),I*exp(im*(phaseMultiplier[3]*phaseShift+phaseAngle)))
+                  push!(CablesPhaseOrder,phaseName[1],phaseName[2],phaseName[3])
+                  push!(CablesRouteShift,phaseAngle,phaseAngle,phaseAngle)
                 else
                   push!(LinesPositions,leftLine,centerLine,rightLine)
                   push!(LinesCurrents,I*exp(im*(phaseMultiplier[1]*phaseShift+phaseAngle)),I*exp(im*(phaseMultiplier[2]*phaseShift+phaseAngle)),I*exp(im*(phaseMultiplier[3]*phaseShift+phaseAngle)))
                   push!(LinesVoltages,voltage*exp(im*(phaseMultiplier[1]*phaseShift+phaseAngle)),voltage*exp(im*(phaseMultiplier[2]*phaseShift+phaseAngle)),voltage*exp(im*(phaseMultiplier[3]*phaseShift+phaseAngle)))
+                  push!(LinesPhaseOrder,phaseName[1],phaseName[2],phaseName[3])
+                  push!(LinesRouteShift,phaseAngle,phaseAngle,phaseAngle)
 
 
                   push!(ConductorThickness,conductorThickness/100,conductorThickness/100,conductorThickness/100)
