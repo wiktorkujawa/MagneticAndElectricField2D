@@ -5,20 +5,21 @@ include(joinpath(@__DIR__, "AboutAuthor.jl"))
 let
   showLineManagement=true
   showPlotWindow=true
-  showAboutAuthor=true
+  showAuthor=false
+  showAbout=false
 
-    no_titlebar = false
-    no_scrollbar = false
-    no_menu = false
-    no_move = false
-    no_resize = false
-    no_collapse = false
-    no_close = false
-    no_nav = false
-    no_background = false
-    no_bring_to_front = false
-    show_app_metrics=false
-    show_app_style_editor=false
+  no_titlebar = false
+  no_scrollbar = false
+  no_menu = false
+  no_move = false
+  no_resize = false
+  no_collapse = false
+  no_close = false
+  no_nav = false
+  no_background = false
+  no_bring_to_front = false
+  show_app_metrics=false
+  show_app_style_editor=false
 
 global function MainMenu(p_open::Ref{Bool})
 
@@ -43,7 +44,8 @@ global function MainMenu(p_open::Ref{Bool})
     
   showLineManagement && @c LineManagementWindow(&showLineManagement)
   showPlotWindow && @c PlotWindow(&showPlotWindow)
-  
+  showAuthor && @c Author(&showAuthor)
+  showAbout && @c About(&showAbout)
   
   if CImGui.BeginMainMenuBar()
     if CImGui.BeginMenu("Menu")
@@ -59,10 +61,9 @@ global function MainMenu(p_open::Ref{Bool})
       end
         CImGui.EndMenu()
     end
-    if CImGui.BeginMenu("About")
-        # @c CImGui.MenuItem("Readme", C_NULL, &author)
-        showAboutAuthor && @c AboutAuthor(&showAboutAuthor)
-        # @c CImGui.MenuItem("About author", C_NULL, &aboutAuthor)
+    if CImGui.BeginMenu("Help")
+        @c CImGui.MenuItem("About", C_NULL, &showAbout)
+        @c CImGui.MenuItem("Author", C_NULL, &showAuthor)
         CImGui.EndMenu()
     end
     CImGui.EndMainMenuBar()
