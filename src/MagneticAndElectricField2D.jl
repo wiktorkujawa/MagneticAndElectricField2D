@@ -52,6 +52,12 @@ CImGui.StyleColorsDark()
 fonts_dir = joinpath(@__DIR__, "..", "fonts")
 fonts = CImGui.GetIO().Fonts
 CImGui.AddFontFromFileTTF(fonts, joinpath(fonts_dir, "OpenSans-Regular.ttf"), 18, C_NULL, CImGui.GetGlyphRangesCyrillic(fonts))
+CImGui.AddFontFromFileTTF(fonts, joinpath(fonts_dir, "Cousine-Regular.ttf"), 18, C_NULL, CImGui.GetGlyphRangesCyrillic(fonts))
+CImGui.AddFontFromFileTTF(fonts, joinpath(fonts_dir, "Karla-Regular.ttf"), 18, C_NULL, CImGui.GetGlyphRangesCyrillic(fonts))
+CImGui.AddFontFromFileTTF(fonts, joinpath(fonts_dir, "ProggyClean.ttf"), 18, C_NULL, CImGui.GetGlyphRangesCyrillic(fonts))
+CImGui.AddFontFromFileTTF(fonts, joinpath(fonts_dir, "ProggyTiny.ttf"), 18, C_NULL, CImGui.GetGlyphRangesCyrillic(fonts))
+CImGui.AddFontFromFileTTF(fonts, joinpath(fonts_dir, "DroidSans.ttf"), 18, C_NULL, CImGui.GetGlyphRangesCyrillic(fonts))
+CImGui.AddFontFromFileTTF(fonts, joinpath(fonts_dir, "Roboto-Medium.ttf"), 18, C_NULL, CImGui.GetGlyphRangesCyrillic(fonts))
 
 
 bar_width=40;

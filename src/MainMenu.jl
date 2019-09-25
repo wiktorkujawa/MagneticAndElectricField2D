@@ -17,8 +17,17 @@ let
     no_nav = false
     no_background = false
     no_bring_to_front = false
+    show_app_metrics=false
+    show_app_style_editor=false
 
 global function MainMenu(p_open::Ref{Bool})
+
+  show_app_metrics && @c CImGui.ShowMetricsWindow(&show_app_metrics)
+  if show_app_style_editor
+      @c CImGui.Begin("Style Editor", &show_app_style_editor)
+      CImGui.ShowStyleEditor()
+      CImGui.End()
+  end
 
   global window_flags = CImGui.ImGuiWindowFlags(0)
     no_titlebar       && (window_flags |= CImGui.ImGuiWindowFlags_NoTitleBar;)
@@ -43,8 +52,9 @@ global function MainMenu(p_open::Ref{Bool})
         CImGui.EndMenu()
     end
     if CImGui.BeginMenu("Settings")
-      if CImGui.BeginMenu("Tbc...")
-        
+      if CImGui.BeginMenu("Windows Style Settings")
+        @c CImGui.MenuItem("Metrics", C_NULL, &show_app_metrics)
+        @c CImGui.MenuItem("Style Editor", C_NULL, &show_app_style_editor)
       CImGui.EndMenu()
       end
         CImGui.EndMenu()
