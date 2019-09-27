@@ -33,7 +33,7 @@ error_callback(err::GLFW.GLFWError) = @error "GLFW ERROR: code $(err.code) msg: 
 GLFW.SetErrorCallback(error_callback)
 
 # create window
-window = GLFW.CreateWindow(1280, 720, "Demo")
+window = GLFW.CreateWindow(1280, 720, "Magnetic and Electric Field 2D")
 @assert window != C_NULL
 GLFW.MakeContextCurrent(window)
 GLFW.SwapInterval(1)

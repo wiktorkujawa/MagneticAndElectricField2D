@@ -5,7 +5,7 @@ let
     CImGui.Begin("Line management", p_open, window_flags) || (CImGui.End(); return)
     
 
-    @cstatic center=Cfloat[0.0,0.0] centerLine=Cfloat[0.0,0.0] leftLine=Cfloat[0.0,0.0] rightLine=Cfloat[0.0,0.0] formationType=Cint(1) I=Cfloat(640.0) phaseAngle=Cfloat(0.0) gapThird=Cfloat[0.0,0.0,0.0] phaseOrder=Cint(0) phaseMultiplier=Cint[0,-1,1] gapFormation=Cfloat(4.0) bundleSpacing=Cfloat(4.0) numberOfBundledConductors=Cint(1) conductorThickness=Cfloat(4.0) elementType=Cint(0) voltage=Cfloat(123.0)  begin
+    @cstatic centerFlat=Cfloat[0.0,0.0] centerTrefoil=Cfloat[0.0,0.0] centerLine=Cfloat[0.0,0.0] leftLine=Cfloat[0.0,0.0] rightLine=Cfloat[0.0,0.0] variousLeft=Cfloat[0.0,0.0] variousCenter=Cfloat[0.0,0.0] variousRight=Cfloat[0.0,0.0] formationType=Cint(1) I=Cfloat(640.0) phaseAngle=Cfloat(0.0) phaseOrder=Cint(0) phaseMultiplier=Cint[0,-1,1] formationSpacing=Cfloat(4.0) bundleSpacing=Cfloat(4.0) numberOfBundledConductors=Cint(1) conductorThickness=Cfloat(4.0) elementType=Cint(0) voltage=Cfloat(123.0)  begin
     @c CImGui.RadioButton("Power lines", &elementType, 0); CImGui.SameLine()
     @c CImGui.RadioButton("Undeground Cables", &elementType, 1);
               CImGui.Separator()
@@ -64,23 +64,26 @@ let
 
 
               if formationType==0
-                @c CImGui.InputFloat2("Vertical and horizontal coordinate of (nominally)left line[m]", leftLine); 
-                @c CImGui.InputFloat2("Vertical and horizontal coordinate of (nominally)center line[m]", centerLine); 
-                @c CImGui.InputFloat2("Vertical and horizontal coordinate of (nominally)right line[m]", rightLine) 
+                @c CImGui.InputFloat2("Vertical and horizontal coordinate of (nominally)left line[m]", variousLeft); 
+                @c CImGui.InputFloat2("Vertical and horizontal coordinate of (nominally)center line[m]", variousCenter); 
+                @c CImGui.InputFloat2("Vertical and horizontal coordinate of (nominally)right line[m]", variousRight)
+                centerLine=variousCenter
+                leftLine=variousLeft
+                rightLine=variousRight 
 
               elseif formationType==1
-                @c CImGui.InputFloat2("Vertical and horizontal coordinate of center line[m]", center); 
-                @c CImGui.InputFloat("Gap between lines", &gapFormation, 1.0, 1.0, "%.2f")
-                centerLine=center
-                leftLine=center-[gapFormation,0.0]
-                rightLine=center+[gapFormation,0.0]
+                @c CImGui.InputFloat2("Vertical and horizontal coordinate of center line[m]", centerFlat); 
+                @c CImGui.InputFloat("Gap between lines", &formationSpacing, 1.0, 1.0, "%.2f")
+                centerLine=centerFlat
+                leftLine=centerFlat-[formationSpacing,0.0]
+                rightLine=centerFlat+[formationSpacing,0.0]
 
               else
-                @c CImGui.InputFloat2("Vertical and Horizontal coordinate of center of formation[m]", centerLine);
-                @c CImGui.InputFloat("Spacing between lines", &gapFormation, 1.0, 1.0, "%.2f")
-                centerLine=center+[0.0,gapFormation*sqrt(2)/3]
-                leftLine=center-gapFormation*[0.5,sqrt(2)/6]
-                rightLine=center-gapFormation*[-0.5,sqrt(2)/6]
+                @c CImGui.InputFloat2("Vertical and horizontal coordinate of center of formation[m]", centerTrefoil);
+                @c CImGui.InputFloat("Spacing between lines", &formationSpacing, 1.0, 1.0, "%.2f")
+                centerLine=centerTrefoil+[0.0,formationSpacing*sqrt(2)/3]
+                leftLine=centerTrefoil-formationSpacing*[0.5,sqrt(2)/6]
+                rightLine=centerTrefoil-formationSpacing*[-0.5,sqrt(2)/6]
               end
 
               if CImGui.Button("Add route")

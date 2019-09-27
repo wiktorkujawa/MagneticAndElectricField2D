@@ -36,7 +36,7 @@ global function PlotWindow(p_open::Ref{Bool})
                 
                 if CImGui.IsItemHovered()
                   region_x = Cint(div(length(x)*(io.MousePos.x - pos.x),img_width)+1)
-                  CImGui.SetTooltip(@sprintf("X = %g m \n B = %.2f", x[region_x], Plot[region_x]))
+                  CImGui.SetTooltip(@sprintf("X = %g m \n B = %.2f %s", x[region_x], Plot[region_x],unit))
                 end
 
               end
